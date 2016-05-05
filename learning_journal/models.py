@@ -33,19 +33,26 @@ Index('my_index', MyModel.name, unique=True, mysql_length=255)
 class Entry(Base):
     __tablename__='entries'
     id = Column(Integer, primary_key=True)
-    title = Column(Text, lenght=255, unique=True, required=True)
+    title = Column(Text(255), unique=True, nullable=False)
     body = Column(Text)
     created = Column(DateTime, default=datetime.datetime.now())
     edited = Column(DateTime, default=datetime.datetime.now())
 
     @classmethod
     def all(class_):
+        Entry = class_
+        q = DBSession.query(Entry)
+        q = q.order_by(Entry.created)
 
-        return
+        return q
 
     @classmethod
     def by_id(cls, id, session=None):
-        return session.query(cls)
+        Entry = cls
+        q = DBSession.query(Entry)
+        q = q.order_by(Entry.id)
+        
+        return q
 
 
 
