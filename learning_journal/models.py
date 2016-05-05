@@ -39,19 +39,16 @@ class Entry(Base):
     edited = Column(DateTime, default=datetime.datetime.now())
 
     @classmethod
-    def all(class_):
-        Entry = class_
-        q = DBSession.query(Entry)
-        q = q.order_by(Entry.created)
-
-        return q
+    def all(cls):
+        for row in Entry:
+            print(Entry.id, Entry.title, Entry.body, Entry.created, Entry.edited)
 
     @classmethod
     def by_id(cls, id, session=None):
         Entry = cls
         q = DBSession.query(Entry)
         q = q.order_by(Entry.id)
-        
+
         return q
 
 
